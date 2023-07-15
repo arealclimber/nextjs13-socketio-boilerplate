@@ -61,7 +61,9 @@ const useStyles = createStyles((theme) => ({
 
     card: {
         border: `${rem(1)} solid ${
-            theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[1]
+            theme.colorScheme === "dark"
+                ? theme.colors.dark[5]
+                : theme.colors.gray[1]
         }`,
     },
 
@@ -80,8 +82,18 @@ const useStyles = createStyles((theme) => ({
 export default function FeaturesCards() {
     const { classes, theme } = useStyles();
     const features = mockdata.map((feature) => (
-        <Card key={feature.title} shadow="md" radius="md" className={classes.card} padding="xl">
-            <feature.icon size={rem(50)} stroke={2} color={theme.fn.primaryColor()} />
+        <Card
+            key={feature.title}
+            shadow="md"
+            radius="md"
+            className={classes.card}
+            padding="xl"
+        >
+            <feature.icon
+                size={rem(50)}
+                stroke={2}
+                color={theme.fn.primaryColor()}
+            />
             <Text fz="lg" fw={500} className={classes.cardTitle} mt="md">
                 {feature.title}
             </Text>
@@ -103,12 +115,23 @@ export default function FeaturesCards() {
                 Integrate effortlessly with any technology stack
             </Title>
 
-            <Text c="dimmed" className={classes.description} ta="center" mt="md">
-                Every once in a while, you’ll see a Golbat that’s missing some fangs. This happens
-                when hunger drives it to try biting a Steel-type Pokémon.
+            <Text
+                c="dimmed"
+                className={classes.description}
+                ta="center"
+                mt="md"
+            >
+                Every once in a while, you’ll see a Golbat that’s missing some
+                fangs. This happens when hunger drives it to try biting a
+                Steel-type Pokémon.
             </Text>
 
-            <SimpleGrid cols={3} spacing="xl" mt={50} breakpoints={[{ maxWidth: "md", cols: 1 }]}>
+            <SimpleGrid
+                cols={3}
+                spacing="xl"
+                mt={50}
+                breakpoints={[{ maxWidth: "md", cols: 1 }]}
+            >
                 {features}
             </SimpleGrid>
         </Container>
