@@ -4,29 +4,29 @@ import { Server as NetServer } from "http";
 import { NextApiResponseServerIO } from "@/types/next";
 
 export const config = {
-    api: {
-        bodyParser: false,
-    },
+	api: {
+		bodyParser: false,
+	},
 };
 
 const socketio = async (req: NextApiRequest, res: NextApiResponseServerIO) => {
-    if (!res.socket.server.io) {
-        console.log("First connect on socket.io");
-        // adapt Next's net Server to http Server
-        const httpServer: NetServer = res.socket.server as any;
-        const io = new ServerIO(httpServer, {
-            path: "/api/socket/socketio",
-            addTrailingSlash: false,
-        });
-        io.on("connect", () => {
-            console.log("SOCKET CONNECTED!");
-        })
-        // append SocketIO server to Next.js socket server response
-        res.socket.server.io = io;
-    } else {
-        console.log("Socket.io already running");
-    }
-    res.end();
+	if (!res.socket.server.io) {
+		console.log("First connect on socket.io");
+		// adapt Next's net Server to http Server
+		const httpServer: NetServer = res.socket.server as any;
+		const io = new ServerIO(httpServer, {
+			path: "/api/socket/socketio",
+			addTrailingSlash: false,
+		});
+		io.on("connect", () => {
+			console.log("SOCKET CONNECTED!");
+		});
+		// append SocketIO server to Next.js socket server response
+		res.socket.server.io = io;
+	} else {
+		console.log("Socket.io already running");
+	}
+	res.end();
 };
 
 export default socketio;
