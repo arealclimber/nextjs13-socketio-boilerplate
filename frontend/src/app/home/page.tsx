@@ -20,7 +20,10 @@ import useBasicStore from "@/store/basic";
 
 export default function Home() {
     const storeName = useBasicStore((state) => state.name);
-    const [socket, emit] = useSocketStore((state) => [state.socket, state.emit]);
+    const [socket, emit] = useSocketStore((state) => [
+        state.socket,
+        state.emit,
+    ]);
 
     const inputRef = useRef<HTMLInputElement>(null);
     const [name, setName] = useState<string | null>(null); // avoiding Next.js hydration error
@@ -31,7 +34,7 @@ export default function Home() {
 
     const sendMessage = () => {
         emit("message", message);
-        setMessages([...messages, message]);
+        // setMessages([...messages, message]);
         setMessage("");
         inputRef.current?.focus();
     };
@@ -45,6 +48,7 @@ export default function Home() {
     useEffect(() => {
         socket?.on("message", (data) => {
             console.log("message", data);
+            setMessages((prev) => [...prev, data]);
         });
         return () => {
             socket?.off("message");
@@ -57,10 +61,19 @@ export default function Home() {
                 <Card shadow="sm" padding="sm" radius="md" withBorder>
                     <Group position="apart" mt="xs" mb="xs">
                         <Group>
-                            <Text size="xl" weight={500} suppressHydrationWarning={true}>
+                            <Text
+                                size="xl"
+                                weight={500}
+                                suppressHydrationWarning={true}
+                            >
                                 {name}
                             </Text>
-                            <Button size="xs" radius="md" onClick={open} variant="light">
+                            <Button
+                                size="xs"
+                                radius="md"
+                                onClick={open}
+                                variant="light"
+                            >
                                 Change name
                             </Button>
                         </Group>
@@ -84,7 +97,11 @@ export default function Home() {
                         size="md"
                         rightSection={
                             <ActionIcon size={32} radius="xl" variant="filled">
-                                <IconArrowRight size="1.1rem" stroke={1.5} onClick={sendMessage} />
+                                <IconArrowRight
+                                    size="1.1rem"
+                                    stroke={1.5}
+                                    onClick={sendMessage}
+                                />
                             </ActionIcon>
                         }
                         placeholder="Type something..."
